@@ -109,6 +109,8 @@ Ici les annotations ORM définisse explicitement le nom de la colonne de la tabl
 
 $form :
 
+![alt text](https://github.com/DavidLiger/CV-Site-Symfony-4/blob/master/public/img/article-15-img-2.png)
+
 La fonction créé un formulaire sur e modèle présent dans la classe RegistrationType (voir code-source). Ce formulaire recevra les informations de l’objet $user qu’on vient de créer. Sa méthode handleRequest lui permet de récupérer les informations depuis la requête.
 
 -Soumettre le formulaire :
@@ -187,6 +189,8 @@ On commence par récupérer dans une variable la dernière erreur d’identifica
 $lastUserName :
 
 Pour le confort de l’utilisateur, cette variable permet d’afficher un pseudo précédemment utilisé. Cela évite d’avoir à le retaper.
+
+![alt text](https://github.com/DavidLiger/CV-Site-Symfony-4/blob/master/public/img/article-15-img-2.png)
 
 This.addFlash(‘connect’,’Bienvenue’) ;
 
