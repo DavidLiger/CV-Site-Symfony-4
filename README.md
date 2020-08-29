@@ -102,6 +102,8 @@ $user :
 
 On créé d’abord un objet de « type » User qui servira à stocker en BDD les infos du nouvel inscrit. La classe user (voir code-source) a chacune de ces propriétés reliée à un champ de la table user dans la BDD via le système d’annotation.
 
+![alt text](https://github.com/DavidLiger/CV-Site-Symfony-4/blob/master/public/img/screen-jeu.png)
+
 
 Ici les annotations ORM définisse explicitement le nom de la colonne de la table désignée, le type de données acceptés...etc..
 
