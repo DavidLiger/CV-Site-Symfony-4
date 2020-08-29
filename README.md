@@ -190,7 +190,7 @@ $lastUserName :
 
 Pour le confort de l’utilisateur, cette variable permet d’afficher un pseudo précédemment utilisé. Cela évite d’avoir à le retaper.
 
-![alt text](https://github.com/DavidLiger/CV-Site-Symfony-4/blob/master/public/img/article-15-img-2.png)
+![alt text](https://github.com/DavidLiger/CV-Site-Symfony-4/blob/master/public/img/article-15-img-3.png)
 
 This.addFlash(‘connect’,’Bienvenue’) ;
 
