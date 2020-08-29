@@ -34,17 +34,17 @@ Pour cela, le CVSite lui-même a été développé à l’aide de Symfony afin d
 categoryBase.html.twig
 
 
-{% if not app.user %}
-      <li class="nav-item">
+	{% if not app.user %}
+      	<li class="nav-item">
               <a href="{{path('security_login')}}" class="nav-link">
                         Connexion
               </a>
-      <li class="nav-item">
+      	<li class="nav-item">
               <a href="{{path('security_registration')}}" class="nav-link">
                         Inscription
               </a>
       </li>
-{% else %}
+	{% else %}
       <li class="nav-item">
               <a href="{{path('security_logout')}}" class="nav-link">
                         Déconnexion
@@ -68,25 +68,24 @@ Chacun de ces liens renvoie vers un « path », un outil de Symfony. En effet, S
 SecurityController.php
 
 
-/**
-* @Route("/inscription", name="security_registration")
-*/
-  public function registration(Request $request, EntityManagerInterface $manager,
-    UserPasswordEncoderInterface $encoder){
-      $user = new User();
+	/**
+	* @Route("/inscription", name="security_registration")
+	*/
+  	public function registration(Request $request, EntityManagerInterface $manager,
+    	UserPasswordEncoderInterface $encoder){
+      		$user = new User();
+      		$form = $this->createForm(RegistrationType::class, $user);
       
-          $form = $this->createForm(RegistrationType::class, $user);
+      		$form->handleRequest($request);
       
-      $form->handleRequest($request);
-      
-      if($form->isSubmitted() && $form->isValid()){
-        $token = bin2hex(random_bytes(50));
-              $user->setToken($token);
-        $hash=$encoder->encodePassword($user, $user->getPassword());
-        $user->setPassword($hash);
-        $this->addFlash('success', 'Inscription réussie !');
-        $manager->persist($user);
-        $manager->flush();
+      	if($form->isSubmitted() && $form->isValid()){
+        	$token = bin2hex(random_bytes(50));
+              	$user->setToken($token);
+        	$hash=$encoder->encodePassword($user, $user->getPassword());
+        	$user->setPassword($hash);
+        	$this->addFlash('success', 'Inscription réussie !');
+        	$manager->persist($user);
+        	$manager->flush();
         
         return $this->redirectToRoute('security_login');
       }
@@ -134,9 +133,9 @@ Le twig :
 registration.html.twig
 
 
-{% extends 'base.html.twig' %}
+	{% extends 'base.html.twig' %}
 
-{% block body %}
+	{% block body %}
     
         <h1 class="h4 text-center py-4 bg-dark ">Inscription</h1>
 
@@ -151,7 +150,7 @@ registration.html.twig
         <button class="btn btn-dark my-4 " type="submit">M'inscrire</button>
 
     {{ form_end(form) }}
-{% endblock %}
+	{% endblock %}
                 
 
 Comme on le voit, ce twig est relativement court. Il hérite du base.html.twig. On ne redéfini que le block body. Dans ce bloc on utilise cinq rangée de formulaire et on précise quel champ du formulaire reçoit l’entrée de l’utilisateur. On peut préciser un label et des attributs comme pour n’importe quel input HTML. Enfin, un simple bouton permet de soumettre ce formulaire.
@@ -160,21 +159,21 @@ Comme on le voit, ce twig est relativement court. Il hérite du base.html.twig. 
 SecurityController.php
 
 
-/**
-* @Route("/connexion", name="security_login")
-*/
-public function login(AuthenticationUtils $authenticationUtils){
-    // get the login error if there is one
-      $error = $authenticationUtils->getLastAuthenticationError();
+	/**
+	* @Route("/connexion", name="security_login")
+	*/
+	public function login(AuthenticationUtils $authenticationUtils){
+    	// get the login error if there is one
+      	$error = $authenticationUtils->getLastAuthenticationError();
 
-      // last username entered by the user
-      $lastUsername = $authenticationUtils->getLastUsername();
-      $this->addFlash('connect', 'Bienvenue ');
-      return $this->render('security/login.html.twig', [
-          'last_username' => $lastUsername,
-          'error'         => $error,
-      ]);
-  }
+      	// last username entered by the user
+      	$lastUsername = $authenticationUtils->getLastUsername();
+      	$this->addFlash('connect', 'Bienvenue ');
+      	return $this->render('security/login.html.twig', [
+          	'last_username' => $lastUsername,
+          	'error'         => $error,
+      	]);
+  	}
                 
 
 Si l’inscription s’est bien passé nous voilà redirigé, via le système de route vers la fonction login.
@@ -197,22 +196,22 @@ Comme on peut le vérifier ici et dans le code ci-dessous, une erreur de connexi
 login.html.twig
 
 
-{% extends 'base.html.twig' %}
+	{% extends 'base.html.twig' %}
 
-{% block body %}
-  <h1>Connexion</h1>
-  {% if error %}
+	{% block body %}
+  	<h1>Connexion</h1>
+  	{% if error %}
             <div class="alert alert-danger alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
                 Vos identifiants ne sont pas reconnus</div>
 
         {% endif %}
   
-  <form action="{{path('security_login')}}" method="post">
-    <div class="form-group">
-      <input placeholder="Pseudo..." required name="_username"
+  	<form action="{{path('security_login')}}" method="post">
+    		<div class="form-group">
+      	<input placeholder="Pseudo..." required name="_username"
       type="text" class="form-control">
-    </div>
+    	</div>
     <div class="form-group">
       <input placeholder="Mot de passe..." required name="_password"
       type="password" class="form-control">
@@ -225,13 +224,13 @@ login.html.twig
       <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate')}}">
       <button type="submit" class="btn btn-success">Connexion !</button>
     </div>
-  </form>
+  	</form>
 
-  <form action="{{ path('oubli') }}" method="post">
+  	<form action="{{ path('oubli') }}" method="post">
     <button type="submit" id="forgotten_mdp" name="forgotten_mdp" class="btn btn-dark" style="float: right" />Mot de passe oublié ?</button>
-  </form>
+  	</form>
   
-{% endblock %}
+	{% endblock %}
                 
 
 Le formulaire se compose de quatre éléments principaux. Un input pour le pseudo, un autre pour le mot de passe. Une case à cocher pour enregistrer sa session et un bouton submit. Le checkbox remember_me est directement lié à un paramétrage de cookie dans le security.yaml. L’input caché ‘_csrf_token’ sert à créer un token que nous pourrons utiliser pour sécuriser la connexion. Le bouton mot de passe oublié renvoie vers la fonction ‘oubli’.
@@ -243,14 +242,14 @@ On utilise simplement un cookie qui nous permet de garder ouverte la session de 
   security.yaml
 
 
-  security:
+  	security:
     
-        firewalls:
+        	firewalls:
             
-                remember_me:
-                    secret:   '%kernel.secret%'
-                    lifetime: 604800 # 1 week in seconds
-                    path:     /           
+                	remember_me:
+                    	secret:   '%kernel.secret%'
+                    	lifetime: 604800 # 1 week in seconds
+                    	path:     /           
 			                
 
 Secret :
@@ -271,20 +270,20 @@ Comme nous l’avons plus haut le CSRF (Cross Site Request Forgery) sécurise l�
 security.yaml
 
 
-security:
-    encoders:
-        App\Entity\User:
-            algorithm: bcrypt
+	security:
+    		encoders:
+        		App\Entity\User:
+            		algorithm: bcrypt
  
-    firewalls:
+    	firewalls:
       
-        main:
+        	main:
             
-            form_login:
-                login_path: security_login
-                check_path: security_login
-                csrf_token_generator: security.csrf.token_manager
-                default_target_path: home        
+            	form_login:
+                	login_path: security_login
+                	check_path: security_login
+                	csrf_token_generator: security.csrf.token_manager
+                	default_target_path: home        
 										                
 
 access_control :
@@ -293,8 +292,8 @@ Afin de parfaire l’authentification, on précisera dans le security.yaml depui
 security.yaml
 
 		                
-access_control:
-        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+	access_control:
+        	- { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 		                       
 		                
 		              
