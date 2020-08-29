@@ -1,0 +1,39 @@
+{% extends 'categoryBase.html.twig'%}
+
+{% block background %}
+<div class="container-fluid" style="text-align: center; margin-top: 0px" >
+            <img src="/uploads/image/{{ article.imageName }}" width="40%" height="auto"></img>
+        </div>
+{% endblock %}
+
+{% block navname %}
+<div style="float: left;">
+              <a class="navbar-brand" style="position: relative;margin-left: 1px;">{{ categorie.nom }}</a>
+                </div>
+{% endblock %}
+
+{% block body %}
+
+	<article>
+	
+		<div style="float: left;">
+			<a href="{{path('home')}}" style="color: #000000"> Accueil</a><span> > </span><a href="{{path('index',{'value': categorie.nom })}}" style="color: #000000">{{ categorie.nom }}</a><span> > </span><a href="{{path('article_show',{'id':article.id})}}" style="color: #000000">{{article.titre}}</a></div><br>
+
+			{% if article.fileName != null %}
+			<br>
+			<h1><b>{{article.titre}}</b></h1>
+			<br>
+			<iframe style="width: 60%; height: 550px;" allowfullscreen src="/uploads/blend4web/{{ article.fileName}}?min_capabilities&compressed_textures_pvr&compressed_textures&no_social&autorotate">
+		</iframe>
+			{% endif %}
+		
+		<br>
+		
+		<div class="content">
+			{{article.contenu | raw}}
+		</div>
+	</article>
+	
+	
+
+{% endblock %}

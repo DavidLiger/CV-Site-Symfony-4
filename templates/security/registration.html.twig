@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+        <h1 class="text-center py-4 bg-dark ">Inscription</h1><br><br>
+
+    {{ form_start(form)}}
+
+    <center><div style="width: 40%; height: auto;">
+    	{{ form_row(form.nom,{'label':"Nom",'attr':{'placeholder':"Entrez votre nom",'class':"form-control mb-4" }}) }}
+         {{ form_row(form.prenom,{'label':"Prenom",'attr':{'placeholder':"Entrez votre prénom", 'class':"form-control mb-4"}}) }}
+         {{ form_row(form.username,{'label':"Pseudo",'attr':{'placeholder':"Entrez votre pseudo", 'class':"form-control mb-4"}}) }}
+         {{ form_row(form.email,{'label':"Adresse email",'attr':{'placeholder':"Entrez votre e-mail", 'class':"form-control mb-4"}}) }}
+         {{ form_row(form.password,{'label':"Mot de passe",'attr':{'placeholder':"Entrez votre mot de passe", 'class':"form-control mb-4"}}) }}
+    </div></center>
+         
+
+        <button class="btn btn-dark my-4 " type="submit">M'inscrire</button>
+        </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    {{ form_end(form) }}
+{% endblock %}

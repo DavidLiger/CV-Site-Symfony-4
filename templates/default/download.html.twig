@@ -1,0 +1,38 @@
+{% extends 'categoryBase.html.twig'%}
+
+{% block background %}
+<div class="container-fluid" style="text-align: center; margin-top: 0px" >
+            <img src="/uploads/image/{{ article.imageNamePreview }}" width="40%" height="auto"></img>
+        </div>
+{% endblock %}
+
+{% block navname %}
+<div style="float: left;">
+              <a class="navbar-brand" style="position: relative;margin-left: 1px;">{{ categorie.nom }}</a>
+                </div>
+{% endblock %}
+
+{% block body %}
+
+	<article>
+	
+		<div style="float: left;">
+			<a href="{{path('home')}}" style="color: #000000"> Accueil</a><span> > </span><a href="{{path('downloads')}}" style="color: #000000">{{ categorie.nom }}</a><span> > </span><a href="{{path('download_show',{'id':article.id})}}" style="color: #000000">{{article.titre}}</a>
+		</div>
+		<br>
+		<div class="content">
+			<img style="" src="/uploads/image/{{ article.imageName }}" alt="{{ article.imageName }}" width="50%" height="auto">
+		</div>
+		<br>
+		
+		
+		<div class="content-fluid">
+            {{article.contenu | raw}}
+            <a href="/uploads/downloads/{{ article.fileName }}" class="btn btn-primary">Téléchargez</a>
+        </div>
+        <br>
+	</article>
+	
+	
+
+{% endblock %}

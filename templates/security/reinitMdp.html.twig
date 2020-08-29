@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <div>
+        <h2 class="border-bottom border-danger text-center">Bienvenue sur l'écran de réinitialisation de mot de passe</h2>
+    </div>
+
+    <br/>
+
+    {{ form_start(form) }}
+    <br/>
+    {{ form_widget(form) }}
+    <br/>
+
+    <button type="submit" class="text-center btn btn-dark">Changer le mot de passe</button>
+
+    {{ form_end(form) }}
+
+{% endblock %}

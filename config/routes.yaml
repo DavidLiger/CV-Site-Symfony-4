@@ -1,0 +1,4 @@
+article_show:
+    path:       /article/{id}
+    controller: App\Controller\MainController::show
+    methods: GET

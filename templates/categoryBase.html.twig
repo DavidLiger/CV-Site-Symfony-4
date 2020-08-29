@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}David Liger Website{% endblock %}</title>
+        
+        {% block stylesheets %}
+        <link rel="shortcut icon" href="/uploads/image/website-icon-hd.png">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+            <link rel="stylesheet" href="{{ asset('css/main.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('css/navbar.css') }}"/>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+            <script src="{{ asset('js/main.js') }}"></script>
+            <script src="{{ asset('js/navbar.js') }}"></script>
+        {% endblock %}
+    </head>
+    <div id="mySidenav" class="side-nav sn-bg-4 fixed">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <li class="nav-item">
+            <a class="nav-link" style="border: solid; margin: 5px;" href="{{path('home')}}">Accueil<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" style="border: solid; margin: 5px;" href="{{path('index',{'value':'Programmation orienté objet'})}}">Programmation Orienté Objet<span class="sr-only">(current)</span></a></li>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" style="border: solid; margin: 5px;" href="{{path('index',{'value':'Moteur de jeu'})}}">Moteur de jeu<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" style="border: solid; margin: 5px;" href="{{path('index',{'value':'Graphismes'})}}">Graphismes<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" style="border: solid; margin: 5px;" href="{{path('index',{'value':'Technos Web'})}}">Technos Web<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" style="border: solid; margin: 5px;" href="{{path('downloads')}}">Téléchargements<span class="sr-only">(current)</span></a>
+        </li>
+    </div>
+
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+{% block background %}
+{% endblock %}
+
+<div style="position: -webkit-sticky; /* Safari */position: sticky; top: 0; margin: 10px;  z-index: 1;">
+    <nav class="navbar navbar-default" id="navbar">
+          <div class="container-fluid">
+            <div style="float: left;" class="navbar-header">
+                <div style="float: left;">
+                    <input type="image" src="/uploads/image/menu.png" onclick="openNav()" width="80" title="Menu"></img>
+                </div>
+
+                {% block navname %}
+                {% endblock %}
+                
+                <div style="float: right;">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+                    </div>
+              
+            </div>
+
+            <div style="float: right;">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                
+                {% if not app.user %}
+                <li class="nav-item">
+                    <a href="{{path('security_login')}}" class="nav-link">
+                        Connexion
+                    </a>
+                <li class="nav-item">
+                    <a href="{{path('security_registration')}}" class="nav-link">
+                        Inscription
+                    </a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a href="{{path('security_logout')}}" class="nav-link">
+                        Déconnexion
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a>{{app.user.username}}</a>
+                </li>
+                {% endif %}
+              </ul> 
+            </div>
+            </div>
+            
+          </div>
+        </nav>
+</div>
+
+
+
+
+    <body>
+        
+
+    <!-- Rendering des messages flashs de type 'success'-->
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <!-- Rendering des messages flashs de type 'failure'-->
+        {% for message in app.flashes('failure') %}
+            <div class="alert alert-warning alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% if app.user %}
+            {% for message in app.flashes('connect') %}
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ message }} {{app.user.username}}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div style="text-align: center;" class="container-fluid">
+             {% block body %}{% endblock %}
+        </div>
+       
+        {% block javascripts %}{% endblock %}
+    </body>
+
+
+    
+
+</html>
+

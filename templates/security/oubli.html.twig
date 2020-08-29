@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    <h2>{{ 'Demande de changement de mot de passe' | trans }}</h2>
+
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+    {{ form_start(form) }}
+        {{ form_rest(form) }} 
+        {{ form_row(form.email,{'attr':{'placeholder':"Entrez adresse mail",'class':"form-control mb-4" }}) }}
+        <button type="submit" class="btn">{{ 'Changer de mot de passe' | trans }}</button>
+        
+    {{ form_end(form) }}
+    
+{% endblock %} 

@@ -1,0 +1,46 @@
+{% extends 'categoryBase.html.twig' %}
+
+
+{% block background %}
+<div class="container-fluid" style="background: repeat; margin-top: 0px" >
+            <img src="/uploads/image/{{ categorie.imageName }}" width="70%" height="100%" style="display: block;
+    margin: 0 auto;"></img>
+        </div>
+{% endblock %}
+
+{% block navname %}
+<div style="float: left;">
+              <a class="navbar-brand" style="position: relative;margin-left: 1px;">{{ categorie.nom }}</a>
+                </div>
+{% endblock %}
+
+{% block body %}
+<div style="float: left;">
+            <a href="{{path('home')}}" style="color: #000000">Accueil</a><span> > </span><a href="{{path('outils')}}" style="color: #000000">{{ categorie.nom }}</a>
+</div>
+<br><br>
+
+<section class="articles">
+
+    {% for article in articles %}
+    <article style="border: solid;">
+        <h2>{{article.titre}}</h2>
+        <div class="content-fluid">
+            <a href="{{path('3dmodelweb_show',{'id':article.id})}}"><iframe style="width: 50%; height: 300px;" allowfullscreen src="/uploads/blend4web/{{ article.imageNamePreview }}?min_capabilities&compressed_textures_pvr&compressed_textures&no_social&autorotate"></iframe></a>
+        </div>
+        <br>
+        <div class="content-fluid">
+            {{article.description | raw}}
+            <a href="{{path('article_show',{'id':article.id})}}" class="btn btn-primary">Lire la suite</a>
+        </div>
+        <br>
+    </article>
+    <br>
+    {% endfor %}
+    
+    
+
+</section>
+
+{% endblock %}
+

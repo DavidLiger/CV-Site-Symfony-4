@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}David Liger Website{% endblock %}</title>
+
+        {% block stylesheets %}
+        <link rel="shortcut icon" href="/uploads/image/website-icon-hd.png">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+            <link rel="stylesheet" href="{{ asset('css/main.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('css/navbar.css') }}"/>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+            <script src="{{ asset('js/main.js') }}"></script>
+            <script src="{{ asset('js/navbar.js') }}"></script>
+        {% endblock %}
+    </head>
+
+    <div id="mySidenav" class="side-nav sn-bg-4 fixed" style="z-index: 2;height: 420px">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <li class="nav-item">
+            <a class="nav-link" style="border: solid; margin: 5px;" href="{{path('index',{'value':'Programmation orienté objet'})}}">Programmation Orientée Objet<span class="sr-only">(current)</span></a></li>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" style="border: solid; margin: 5px;" href="{{path('index',{'value':'Moteur de jeu'})}}">Moteur de jeu<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" style="border: solid; margin: 5px;" href="{{path('index',{'value':'Graphismes'})}}">Graphismes<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" style="border: solid; margin: 5px;" href="{{path('index',{'value':'Technos Web'})}}">Technos Web<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" style="border: solid; margin: 5px;" href="{{path('downloads')}}">Téléchargements<span class="sr-only">(current)</span></a>
+        </li>
+    </div>
+
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+{% block background %}
+	<div class="container-fluid" style="background: repeat; margin-top: 0px" >
+		<video autoplay="" muted="" loop="" poster="/uploads/image/poster.png" width="100%" height="100%">
+  			<source src="/uploads/video/carrousel-accueil.mp4" type="video/mp4">
+  			<source src="movie.ogg" type="video/ogg">
+			Your browser does not support the video tag.
+		</video>
+    </div>
+{% endblock %}
+
+<div style="position: -webkit-sticky; /* Safari */position: sticky; top: 0; margin: 10px;  z-index: 1;">
+    <nav class="navbar navbar-default" id="navbar">
+          <div class="container-fluid">
+            <div style="float: left;" class="navbar-header">
+                <div style="float: left;">
+                    <input type="image" src="/uploads/image/menu.png" onclick="openNav()" width="80" title="Menu"></img>
+                </div>
+
+                {% block navname %}
+                <div style="float: left;">
+              <a class="navbar-brand" style="position: relative;margin-left: 1px;">David Liger WebSite</a>
+                </div>
+                {% endblock %}
+
+                <div style="float: right;">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+                    </div>
+
+            </div>
+
+            <div style="float: right;">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+
+                {% if not app.user %}
+                <li class="nav-item">
+                    <a href="{{path('security_login')}}" class="nav-link">
+                        Connexion
+                    </a>
+                <li class="nav-item">
+                    <a href="{{path('security_registration')}}" class="nav-link">
+                        Inscription
+                    </a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a href="{{path('security_logout')}}" class="nav-link">
+                        Déconnexion
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a>{{app.user.username}}</a>
+                </li>
+                {% endif %}
+              </ul>
+            </div>
+            </div>
+
+          </div>
+        </nav>
+</div>
+
+
+
+
+    <body>
+
+
+    <!-- Rendering des messages flashs de type 'success'-->
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <!-- Rendering des messages flashs de type 'failure'-->
+        {% for message in app.flashes('failure') %}
+            <div class="alert alert-warning alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% if app.user %}
+            {% for message in app.flashes('connect') %}
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ message }} {{app.user.username}}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+
+             {% block body %}
+
+    <body>
+        <div class="row">
+            <div class="col-md-4"><center><a href="/uploads/downloads/CV-David-Liger-Dev-JV.pdf" title="CV de David Liger"><img src="/uploads/image/photo.png" style="width: 40%;
+  height: auto;"></a></center></div>
+            <div class="col-md-4"><p><h2>Bienvenue</h2></p></div>
+        </div>
+
+<div style="text-align: left;margin: 10px;">
+    <article>
+        <div class="content"><h4><p><br>
+                Créé pour apporter un complément d'informations au CV que je vous ai fait parvenir, ce site couvre mes compétences en 3D, technologies Web, utilisation de moteur de jeu et développement en language orienté objet.</p><p>
+                  Ici vous trouverez :</p>
+                    <div class="content" style="border: solid;background-color: Grey;">Une présentation de mon titre "commercial" : "<a href="/article/9" style="color: #ffffff">Crazy Monster Truck</a>", publié sur le Google PlayStore.<br><br>
+                    <center><a href="/article/9"><img src="/uploads/image/CMT.png" style="width: 25%;
+  height: auto;"></a></center><br></div><br>
+                    <div class="content" style="border: solid;background-color: Grey;">Une démo d'un mini-RPG : "<a href="/article/4" style="color: #ffffff">Gobelins & Arbalètes</a>", créée avec le Blender Game Engine.<br><br>
+                    <center><a href="/article/4"><img src="/uploads/image/Gob-charrette.png" style="width: 25%;
+  height: auto;"></a></center><br></div><br>
+                    <div class="content" style="border: solid;background-color: Grey;">Un mini-jeu : "<a href="/article/3" style="color: #ffffff">Tanks dans un Labyrinthe</a>" créé avec le Blender Game Engine, dont je propose le téléchargement.<br><br>
+                    <center><a href="/article/3"><img src="/uploads/image/BGE-Fonc-1.jpg" style="width: 25%;
+  height: auto;"></a></center><br></div><br>
+
+
+
+
+                  <p>J'explique également mon code, notamment en détaillant :</p>
+
+                    <div class="content" style="border: solid;background-color: Grey;">La <a href="/article/10" style="color: #ffffff">création aléatoire de véhicules</a> dans "Crazy Monster Truck".<br><br>
+                    <center><a href="/article/10"><img src="/uploads/image/article-10-img-2.png" style="width: 25%;
+  height: auto;"></a></center><br></div><br>
+                    <div class="content" style="border: solid;background-color: Grey;">Le <a href="/article/3" style="color: #ffffff">changement d'armes</a> (à la GTA 3) dans "Tanks dans un Labyrinthe"<br><br>
+                    <center><a href="/article/3"><img src="/uploads/image/diagramme.png" style="width: 25%;
+  height: auto;"></a></center><br></div><br>
+
+
+                  <p>Vous trouverez également le détail du système de connection de ce site (passage obligatoire pour pouvoire télécharger les ressources), quelques objets 3D que j'ai réalisés, et bien d'autres articles encore...</p><br>
+                 <center><h3>Bonne navigation !</h3></center></div>
+
+   </article>
+      </div>
+
+
+
+    </body>
+
+
+
+
+             {% endblock %}
+        </div>
+
+        {% block javascripts %}{% endblock %}
+    </body>
+
+
+
+
+</html>
