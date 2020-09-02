@@ -3,32 +3,32 @@ Personal CV Site made with Symfony 4 as a blog.
 
 
 
-Construit avec Symfony, ce site est structuré afin de comporter plusieurs fonctionnalités de base.
+Built with Symfony, this site is structured to include several basic functionalities.
 
 
-- Module de connexion :
+- Connection module :
 
-L’inscription et la connexion à un site sont des fonctionnalités courantes qui permettent de sécuriser l’accès à certaines parties ou ressources du site. Cette fonctionnalité permet également de récupérer des informations qui permettent de fidéliser les utilisateurs (adresse mail…)
-
-
-- Mot de passe oublié :
-
-Fonctionnalité indispensable au module de connexion afin d’éviter que les utilisateurs multiplient les comptes ou abandonne l’usage du site.
+Registering and connecting to a site are common functionalities that allow secure access to certain parts or resources of the site. This functionality also allows you to retrieve information that helps to build user loyalty (email address, etc.).
 
 
-- Affichage d’articles :
+- Forgot your password?
 
-Un système de gestion d’article via une base de donnée, ce qui permet de réaliser des index dans lesquels les articles sont listés, rendant l’expérience utilisateur plus agréable et l’ajout de nouvelles pages plus facile.
-
-Principalement développé en Php et utilisant MySql, ce site utilise également des fonctionnalités CSS pour la Sidenav et la Navbar.
+Essential functionality in the login module to prevent users from multiplying accounts or abandoning the use of the site.
 
 
-Fonctionnalité du site CVSite : module d'identification en php avec symfony et mysql
-(inscription, connection, mot de passe oublié, et cookie de mémorisation de l'utilisateur)
+- Display of articles :
 
-Le but du CVSite est de mettre en lumière les différentes compétences que j’ai acquis autour du développement de jeu, de la création 3D et du développement web.
+An article management system via a database, which allows the creation of indexes in which articles are listed, making the user experience more pleasant and the addition of new pages easier.
 
-Pour cela, le CVSite lui-même a été développé à l’aide de Symfony afin de bénéficier de la puissance de ce framework en Php. J’ai également utilisé une base de donnée MySQL afin de stocker les différents articles et ainsi augmenter le nombre de pages sans avoir à recoder le site à l’avenir. Le module de connexion est un exemple de fonctionnalité avancé que je suis en mesure d’implémenter.
+Mainly developed in Php and using MySql, this site also uses CSS functionality for the Sidenav and Navbar.
+
+
+CVSite functionality: identification module in php with symfony and mysql
+(registration, login, forgotten password, and user memorization cookie)
+
+The aim of the CVSite is to highlight the different skills I have acquired around game development, 3D creation and web development.
+
+For this, the CVSite itself has been developed using Symfony in order to benefit from the power of this framework in Php. I also used a MySQL database in order to store the different articles and thus increase the number of pages without having to recode the site in the future. The connection module is an example of an advanced feature that I am able to implement.
 
 1-Twig :
 categoryBase.html.twig
@@ -56,15 +56,15 @@ categoryBase.html.twig
                 {% endif %}            
                 
 
-Symfony utilise Twig, un moteur de template qui permet de générer facilement l’affichage coté client via une syntaxe propre autorisant la réutilisation de modèles de base. Ainsi categoryBase.html.twig est un modèle de base qui est réutilisé par les autres templates. Ainsi on économise la réécriture des appels de source en Javascript et CSS, la réécriture d’une navbar, d’une sidebar…
+Symfony uses Twig, a template engine that allows to easily generate the client-side display via a clean syntax allowing the reuse of basic templates. Thus categoryBase.html.twig is a basic template that is reused by other templates. Thus we save the rewriting of source calls in Javascript and CSS, the rewriting of a navbar, a sidebar ...
 
-Dans twig on peut également utiliser des fonctions de programmation procédurales comme les conditions et les boucles.
+In twig you can also use procedural programming functions such as conditions and loops.
 
-Ici on va tester la variable booléenne app.user. Enregistré au niveau de la session, et donc accessible partout dans le projet elle renvoie « true » lorsque l’utilisateur est connecté. Dans ce cas on affiche un lien « déconnexion », dans le cas contraire un lien « connexion » et un lien « inscription ».
+Here we will test the boolean variable app.user. Saved at session level, and therefore accessible everywhere in the project, it returns "true" when the user is logged in. In this case a "disconnect" link is displayed, otherwise a "connect" link and a "register" link.
 
-Chacun de ces liens renvoie vers un « path », un outil de Symfony. En effet, Symfony utilise un système de routing pour rediriger vers une fonction Php. Ici, en cliquant sur le lien inscription, on est renvoyé vers la fonction ‘registration’ atteignable par la route (path) nommé ‘security_registration’.
+Each of these links returns a "path", a Symfony tool. Indeed, Symfony uses a routing system to redirect to a Php function. Here, by clicking on the registration link, one is redirected to the 'registration' function that can be reached by the path named 'security_registration'.
 
-2-La fonction inscription :
+2-Registration functionality :
 SecurityController.php
 
 
@@ -96,44 +96,44 @@ SecurityController.php
       } 			  	
 				  	
 
-Cette fonction utilise trois paramètres : la requête, une instance de EditManagerInterface et enfin un objet de « type » UserPasswordEncoderInterface.
+This function uses three parameters: the request, an instance of EditManagerInterface and finally an object of "type" UserPasswordEncoderInterface.
 
 $user :
 
-On créé d’abord un objet de « type » User qui servira à stocker en BDD les infos du nouvel inscrit. La classe user (voir code-source) a chacune de ces propriétés reliée à un champ de la table user dans la BDD via le système d’annotation.
+First, a User "type" object is created, which will be used to store the new registrant's information in the database. The user class (see source code) has each of these properties linked to a field in the user table in the database via the annotation system.
 
 ![alt text](https://github.com/DavidLiger/CV-Site-Symfony-4/blob/master/public/img/article-15-img-1.png)
 
 
-Ici les annotations ORM définisse explicitement le nom de la colonne de la table désignée, le type de données acceptés...etc..
+Here the ORM annotations explicitly define the name of the designated table column, the type of data accepted, etc...
 
 $form :
 
 ![alt text](https://github.com/DavidLiger/CV-Site-Symfony-4/blob/master/public/img/article-15-img-2.png)
 
-La fonction créé un formulaire sur e modèle présent dans la classe RegistrationType (voir code-source). Ce formulaire recevra les informations de l’objet $user qu’on vient de créer. Sa méthode handleRequest lui permet de récupérer les informations depuis la requête.
+The function creates a form based on the template present in the RegistrationType class (see source code). This form will receive the information of the $user object just created. Its handleRequest method allows it to retrieve the information from the request.
 
--Soumettre le formulaire :
+-Submit the form :
 
 $token :
 
-Lorsqu’on clique sur le bouton ‘s’inscrire ‘ et si le formulaire est valide (si tous les champs requis sont remplis correctement), alors on commence par créer un token avec la fonction bin2hex qui produit une chaîne de 50 caractères aléatoires et on la stocke dans le champ token de la table user.
+When you click on the 'register' button and if the form is valid (if all the required fields are filled in correctly), then you start by creating a token with the bin2hex function that produces a string of 50 random characters and store it in the token field of the user table.
 
-Ce token sera utilisé pour produire un lien html unique dans l’adresse mail du message envoyé à l’utilisateur dans le cas d’une demande de renouvellement de mot de passe. Dans ce cas, ce token sera automatiquement remplacé afin de proscrire sa réutilisation et ainsi sécuriser la procédure.
+This token will be used to produce a unique html link in the email address of the message sent to the user in the case of a password renewal request. In this case, this token will be automatically replaced in order to prohibit its reuse and thus secure the procedure.
 
 Password :
 
-On utilise ensuite la méthode encodePassword de nôtre objet $encoder afin de coder le mot de passe de l’utilisateur. Ainsi même l’administrateur du site ne peut connaître les mots de passe de ses abonnés ! Sécurité avant tout !
+We then use the encodePassword method of our $encoder object to encode the user's password. Thus even the site administrator cannot know the passwords of his subscribers! Security above all!
 
 $manager :
 
-L’EntityManagerInterface est une classe de Doctrine, l’ORM (Object Relationnal Mapping) utilisé par Symfony. En d’autres termes l’objet $manager nous facilite la vie en gérant pour nous la relation à la BDD. Ici, la méthode persist() enregistre l’objet user puis la méthode flush() remet à jour la BDD.
+The EntityManagerInterface is a Doctrine class, the ORM (Object Relational Mapping) used by Symfony. In other words the $manager object makes our life easier by managing for us the relationship to the DB. Here, the persist() method registers the user object then the flush() method updates the DB.
 
-Ensuite, elle renvoie vers la route ‘security_login’ qui nous oblige à nous connecter une fois inscrit. En-dehors de cette condition, la fonction registration() affiche(render()) le twig (page html) registration.html.twig.
+Then, it returns to the 'security_login' route which forces us to connect once we have registered. Outside this condition, the registration() function displays(render()) the twig (html page) registration.html.twig.
 
-Ce twig a besoin d’un paramètre le ‘form’ : le formulaire $form, qui possède une fonction createView() permettant de l’afficher.
+This twig needs a 'form' parameter: the $form form, which has a createView() function to display it.
 
-Le twig :
+Twig :
 registration.html.twig
 
 
@@ -157,9 +157,9 @@ registration.html.twig
 	{% endblock %}
                 
 
-Comme on le voit, ce twig est relativement court. Il hérite du base.html.twig. On ne redéfini que le block body. Dans ce bloc on utilise cinq rangée de formulaire et on précise quel champ du formulaire reçoit l’entrée de l’utilisateur. On peut préciser un label et des attributs comme pour n’importe quel input HTML. Enfin, un simple bouton permet de soumettre ce formulaire.
+As you can see, this twig is relatively short. It inherits the base .html.twig. Only the block body is redefined. In this block we use five form rows and we specify which form field receives the user input. A label and attributes can be specified as for any HTML input. Finally, a simple button is used to submit the form.
 
-3-La fonction connexion :
+3-The login function :
 SecurityController.php
 
 
@@ -180,25 +180,25 @@ SecurityController.php
   	}
                 
 
-Si l’inscription s’est bien passé nous voilà redirigé, via le système de route vers la fonction login.
+If the registration was successful we are redirected via the route system to the login function.
 
 $error :
 
-On commence par récupérer dans une variable la dernière erreur d’identification. Si elle est vide on peut se connecter sinon on affichera un message depuis le twig.
+We start by retrieving in a variable the last identification error. If it is empty we can log in, otherwise we will display a message from the twig.
 
 $lastUserName :
 
-Pour le confort de l’utilisateur, cette variable permet d’afficher un pseudo précédemment utilisé. Cela évite d’avoir à le retaper.
+For the comfort of the user, this variable makes it possible to display a previously used nickname. This avoids having to retype it.
 
 ![alt text](https://github.com/DavidLiger/CV-Site-Symfony-4/blob/master/public/img/article-15-img-3.png)
 
 This.addFlash(‘connect’,’Bienvenue’) ;
 
-Les « flashs » sont des messages prédéfinis « hérités » du twig-mère et utilisés dans le twig. Ici, à condition d’avoir un utilisateur connecté, pour les flashs de type « connect » on affiche des messages de type « success » (vert) avec le message (ici : bienvenue) et le pseudo de l’utilisateur.
+Flashes" are predefined messages "inherited" from the mother twig and used in the twig. Here, if a user is logged in, for "connect" flashes, "success" (green) messages are displayed with the message (here: welcome) and the user's nickname.
 
-Enfin, toujours dans login, on affiche le twig login.html.twig avec les variables last_username et error.
+Finally, still in login, we display the twig login.html.twig with the variables last_username and error.
 
-Comme on peut le vérifier ici et dans le code ci-dessous, une erreur de connexion provoque l’affichage d’un alert.
+As can be checked here and in the code below, a connection error causes an alert to be displayed.
 login.html.twig
 
 
@@ -239,11 +239,11 @@ login.html.twig
 	{% endblock %}
                 
 
-Le formulaire se compose de quatre éléments principaux. Un input pour le pseudo, un autre pour le mot de passe. Une case à cocher pour enregistrer sa session et un bouton submit. Le checkbox remember_me est directement lié à un paramétrage de cookie dans le security.yaml. L’input caché ‘_csrf_token’ sert à créer un token que nous pourrons utiliser pour sécuriser la connexion. Le bouton mot de passe oublié renvoie vers la fonction ‘oubli’.
+The form consists of four main elements. One input for the username, another for the password. A checkbox to record your session and a submit button. The remember_me checkbox is directly linked to a cookie setting in the security.yaml. The hidden input '_csrf_token' is used to create a token that we can use to secure the connection. The forgotten password button will take you back to the 'forget' function.
 
 -remember_me :
 
-On utilise simplement un cookie qui nous permet de garder ouverte la session de l’utilisateur connecté après la fermeture du navigateur.
+We simply use a cookie that allows us to keep the logged-in user logged in after the browser is closed.
 
   security.yaml
 
@@ -260,19 +260,19 @@ On utilise simplement un cookie qui nous permet de garder ouverte la session de 
 
 Secret :
 
-est définie par la variable d’environnement défini dans APP_SECRET. Cette valeur sert à crypter le contenu du cookie.
+is defined by the environment variable defined in APP_SECRET. This value is used to encrypt the content of the cookie.
 
 Lifetime :
 
-est la durée de conservation du cookie.
+is the duration of the cookie's conservation.
 
 Path :
 
-est l’adresse à partir de laquelle le cookie est actif, pardéfaut sur l ‘ensemble du site.
+is the address from which the cookie is active, by default on the whole site.
 
 CSRF :
 
-Comme nous l’avons plus haut le CSRF (Cross Site Request Forgery) sécurise l’authentification des utilisateurs et prévient des tentatives d’attaque visant à faire soumettre aux utilisateurs des données personnelles sans qu’ils le sachent et à leur place. Pour ce faire, la protection CSRF ajoute un champ caché, l’input, vu précédemment, qui contient une valeur aléatoire (token) connu uniquement par le site et son abonné, cela garanti que c’est bien l’utilisateur et non quelqu’un d’autre qui soumet des données.
+As mentioned above, CSRF (Cross Site Request Forgery) secures user authentication and prevents attempts to attack users by having them submit personal data without their knowledge and on their behalf. To do this, the CSRF protection adds a hidden field, the input, seen above, which contains a random value (token) known only to the site and its subscriber, ensuring that it is the user and not someone else who submits data.
 security.yaml
 
 
@@ -294,7 +294,7 @@ security.yaml
 
 access_control :
 
-Afin de parfaire l’authentification, on précisera dans le security.yaml depuis quelle partie du site et quel rôle on donne à celui qui n’est pas encore connecté.
+In order to perfect the authentication, the security.yaml will specify from which part of the site and what role is given to the person who is not yet logged in.
 security.yaml
 
 		                
